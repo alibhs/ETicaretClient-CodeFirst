@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ProductService } from '../../../../services/common/models/product.service';
 import {Create_Product } from '../../../../contracts/create-product';
 import { BaseComponent, SpinnerType } from '../../../../base/base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertifyService, MessageType, Position } from '../../../../services/admin/alertify.service';
+
 
 
 @Component({
@@ -18,6 +19,9 @@ constructor(spinner:NgxSpinnerService, private productService:ProductService,pri
 
 ngOnInit(): void {
   }
+
+  @Output() createdProduct: EventEmitter<Create_Product> = new EventEmitter();
+
   create(name:HTMLInputElement,stock:HTMLInputElement,price:HTMLInputElement){
     this.showSpinner(SpinnerType.BallAtom);
     const create_product: Create_Product = new Create_Product();
@@ -29,6 +33,13 @@ ngOnInit(): void {
       this.alertify.message("Ürün Başarıyla Eklenmiştir.",{
         dismissOther:true,
         messageType:MessageType.Success,
+        position:Position.TopRight
+      });
+      this.createdProduct.emit(create_product); 
+    },errorMessage => {
+      this.alertify.message(errorMessage,{
+        dismissOther:true,
+        messageType:MessageType.Error,
         position:Position.TopRight
       });
     });
