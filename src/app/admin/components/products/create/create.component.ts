@@ -23,7 +23,11 @@ ngOnInit(): void {
 
   @Output() createdProduct: EventEmitter<Create_Product> = new EventEmitter();
   @Output() fileUploadOptions:Partial<FileUploadOptions> = {
-    
+    actions:"upload",
+    controller:"products",
+    explanation:"Resimleri sürükleyin veya seçin",
+    isAdminPage:true,
+    accept:".png,.jpg,.jpeg,.json"
   };
 
   create(name:HTMLInputElement,stock:HTMLInputElement,price:HTMLInputElement){
