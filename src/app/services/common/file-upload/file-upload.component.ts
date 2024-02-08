@@ -7,6 +7,8 @@ import { CustomToastrService, ToastrMessageType, ToastrPosition } from '../../ui
 import { MatDialog } from '@angular/material/dialog';
 import { FileUploadDialogComponent, FileUploadDialogState } from '../../../dialogs/file-upload-dialog/file-upload-dialog.component';
 import { DialogService } from '../dialog.service';
+import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerType } from '../../../base/base.component';
 
 
 @Component({
@@ -19,7 +21,8 @@ export class FileUploadComponent {
     private alertifyService: AlertifyService,
     private customToastrService: CustomToastrService,
     private dialogService: DialogService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private spinner: NgxSpinnerService) { }
 
   public files: NgxFileDropEntry[];
 
@@ -39,6 +42,7 @@ export class FileUploadComponent {
       componentType: FileUploadDialogComponent,
       data: FileUploadDialogState.Yes,
       afterClosed: () => {
+        this.spinner.show(SpinnerType.BallAtom)
 
         this.httpclientService.post({
           controller: this.options.controller,
@@ -48,6 +52,8 @@ export class FileUploadComponent {
         }, fileData).subscribe(data => {
 
           const successMessage: string = "Dosyalar başarıyla yüklenmiştir.";
+          this.spinner.hide(SpinnerType.BallAtom)
+
 
           if (this.options.isAdminPage) {
             this.alertifyService.message(successMessage, {
@@ -61,9 +67,12 @@ export class FileUploadComponent {
               position: ToastrPosition.TopRight
             })
           }
-        }, (errorResponse: HttpErrorResponse) => {
+        }
+        , (errorResponse: HttpErrorResponse) => {
           if (this.options.isAdminPage) {
-            this.alertifyService.message("Dosyalar yüklenirken beklenmeyen bir hata ile karşılmıştır.", {
+            this.alertifyService.message("Dosyalar yüklenirken beklenmeyen bir hata ile karşılmıştır.",
+             {
+
               dismissOther: true,
               messageType: MessageType.Success,
               position: Position.TopRight
