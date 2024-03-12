@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './admin/layout/layout.component';
 import { DashboardComponent } from './admin/components/dashboard/dashboard.component';
 import { HomeComponent } from './ui/components/home/home.component';
+import { authGuard } from './guards/common/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,23 +16,23 @@ const routes: Routes = [
         loadChildren: () =>
           import('./admin/components/customers/customers.module').then(
             (module) => module.CustomersModule
-          ),
+          ), canActivate: [authGuard]
       },
       {
         path: 'products',
         loadChildren: () =>
           import('./admin/components/products/products.module').then(
             (module) => module.ProductsModule
-          ),
+          ), canActivate: [authGuard]
       },
       {
         path: 'orders',
         loadChildren: () =>
           import('./admin/components/orders/orders.module').then(
             (module) => module.OrdersModule
-          ),
+          ), canActivate: [authGuard]
       },
-    ],
+    ], canActivate: [authGuard]
   },
   {
     path: '',

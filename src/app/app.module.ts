@@ -11,6 +11,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import { DeleteDirective } from './directives/admin/delete.directive';
 import { FileUploadDialogComponent } from './dialogs/file-upload-dialog/file-upload-dialog.component';
+import { JwtModule } from '@auth0/angular-jwt';
 
 
 @NgModule({
@@ -25,7 +26,13 @@ import { FileUploadDialogComponent } from './dialogs/file-upload-dialog/file-upl
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgxSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config:{
+        tokenGetter:() => localStorage.getItem("accessToken"),
+        allowedDomains:["localhost:7254"]
+      }
+    })
 
   ],
   providers: [
