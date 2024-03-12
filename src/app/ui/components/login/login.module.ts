@@ -5,9 +5,11 @@ import { RouterModule } from '@angular/router';
 
 
 
+
 @NgModule({
   declarations: [
-    LoginComponent
+    // LoginComponent
+    
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,7 @@ import { RouterModule } from '@angular/router';
         path: "", component: LoginComponent
       }
     ]),
-
+    
   ]
 })
 export class LoginModule { }
