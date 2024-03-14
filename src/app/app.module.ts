@@ -17,6 +17,7 @@ import { FileUploadDialogComponent } from './dialogs/file-upload-dialog/file-upl
 import { JwtModule } from '@auth0/angular-jwt';
 import { LoginComponent } from './ui/components/login/login.component';
 import {
+  FacebookLoginProvider,
   GoogleLoginProvider,
   GoogleSigninButtonModule,
   SocialAuthServiceConfig,
@@ -57,6 +58,10 @@ import {
               "159004242330-kb44vjneu02e24j9ghutbn1t149922n7.apps.googleusercontent.com"
             ),
           },
+          {
+            id:FacebookLoginProvider.PROVIDER_ID,
+            provider:new FacebookLoginProvider("427352943286402")
+          }
         ],
         onError: (err) => console.log(err),
       } as SocialAuthServiceConfig,
